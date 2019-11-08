@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 import {AuthService} from './shared/auth.service';
 
 var VIEW_CONFIG = {
-  'advertiser': {
+  'Advertiser': {
     'title': 'Upload creative',
     'sidebarItems': [
       {
@@ -16,14 +16,18 @@ var VIEW_CONFIG = {
         'icon': 'star',
       },
     ],
+  },
+  'Partner': {
+    'title': 'Create Package',
+    'sidebarItems': [
+      {
+        'label': 'Create Package',
+        'routerLink': 'partner',
+        'icon': 'star',
+      },
+    ],
   }
 };
-
-var loggedInUser = {
-  'userName': 'rathor@google.com',
-  'role': 'advertiser',
-};
-
 
 @Component({
   selector: 'app-root',
@@ -42,20 +46,21 @@ export class AppComponent {
   user = {};
 
   ngOnInit() {
-    this.auth.getAuthState().subscribe((user) => {
-      if (user && user.emailVerified) {
-        this.user = user;
-        // this.router.navigate(['admin']);
-        this.setUpViewForUser(loggedInUser);
-      } else {
-        this.router.navigate(['login']);
+    this.auth.getStoreAdsUser$.subscribe((userData) => {
+      if (!userData.loggedIn) {
+        return;
       }
+      this.user = userData.user;
+      this.setUpViewForUser(userData.user);
+      this.router.navigate(['admin']);
     });
   }
 
   setUpViewForUser(user) {
     var role = user['role'];
-    if (role == 'advertiser') {
+    if (role == 'Advertiser') {
+      this.viewConfig = VIEW_CONFIG[role];
+    } else if (role == 'Partner') {
       this.viewConfig = VIEW_CONFIG[role];
     }
   }

@@ -1,28 +1,43 @@
 <div style="display: flex; height: 300px;margin-top: 5%;">
-<mat-card style="margin: auto;">
-  <mat-card-header>
-    <mat-card-title>Please select a creative to upload.</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form class="example-form">
-      <div style="display: flex;align-items: center;justify-content: space-evenly;">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Enter deal id">
-      </mat-form-field>
-      <div class="filepicker-container">
-      <a (click)="filePicker.click()" class="action-icon">
-        <mat-icon class="menu">file_upload</mat-icon>
-      </a>
-      <input #filePicker
-             type="file"
-             accept="image/*"
-             name="picker"
-             style="display: none;"
-             [(ngModel)]="uploadFile"
-             (change)="uploadImages($event)"/>
-    </div>
-    </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+  <mat-card style="margin: auto;">
+    <mat-card-header>
+      <mat-card-title>Please select a creative to upload.</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #f="ngForm" class="example-form" name="form" (ngSubmit)="onSubmit()">
+        <div class="field-container">
+          <div style="display: flex; flex-direction: column;">
+          <mat-form-field>
+            <input name="dealId" matInput [(ngModel)]="dealId" placeholder="Enter deal id"  required>
+          </mat-form-field>
+          <mat-form-field>
+            <input name="fileName" matInput [(ngModel)]="fileName" placeholder="Enter file name" required >
+          </mat-form-field>
+          </div>
+          <div class="filepicker-container">
+            <a (click)="filePicker.click()" class="action-icon">
+              <mat-icon class="menu">file_upload</mat-icon>
+            </a>
+            <input #filePicker type="file" accept="image/*" name="picker" style="display: none;"  (change)="grabImage($event)" />
+          </div>
+        </div>
+        <div style="text-align: center;" *ngIf="selectedFile.name">
+          Selected File: {{selectedFile.name}}
+        </div>
+        <div style="text-align: center;" *ngIf="!this.selectedFile.name">
+          Please select a file.
+        </div>
+        <div class="warn" *ngIf="invalidForm">
+          File name and deal id are are required.
+        </div>
+        <button mat-raised-button *ngIf="!showLoader" type="submit" color="primary">
+          Upload image
+        </button>
+        <mat-spinner *ngIf="showLoader" strokeWidth="3" [diameter]="50"></mat-spinner>
+        <div *ngIf="showLoader">
+          Progress : {{uploadPercent}}
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

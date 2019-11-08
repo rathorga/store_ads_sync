@@ -5,3 +5,22 @@
 .filepicker-container > div {
     padding: .7em;
 }
+
+.field-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.warn {
+  text-align: center;
+  color: red;
+}
+
+.example-form {
+  text-align: center;
+}
+
+.example-form button[type="submit"] {
+  margin-top: 35px;
+}

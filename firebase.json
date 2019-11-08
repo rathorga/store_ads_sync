@@ -1,0 +1,17 @@
+{
+  "hosting": [{
+    "target": "admin",
+    "public": "dist/store-ads-cms",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }]
+}
