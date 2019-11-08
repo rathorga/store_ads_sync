@@ -1,0 +1,35 @@
+<div class="example-container" *ngIf="viewConfig;">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="example-app-name">{{viewConfig.title}}</h1>
+      <div style="display: flex;flex: 1; justify-content: flex-end;">
+        <!-- Image source is causing a http call with null which is failing need to check.-->
+        <span>{{user.displayName}}</span>
+          <img [src]="user.photoURL"
+               class="user-img"
+               alt="">
+      </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav #snav>
+      <mat-nav-list>
+        <a mat-list-item
+           [routerLinkActive]="['is-active']"
+           [routerLink]="sidebarItem['routerLink']"
+           *ngFor="let sidebarItem of viewConfig['sidebarItems']">
+          <mat-icon class="hz-sidenav-icons">{{sidebarItem['icon']}}</mat-icon>
+          <div>{{sidebarItem['label']}}</div>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="container">
+      <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

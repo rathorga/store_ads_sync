@@ -1,0 +1,28 @@
+<div style="display: flex; height: 300px;margin-top: 5%;">
+<mat-card style="margin: auto;">
+  <mat-card-header>
+    <mat-card-title>Please select a creative to upload.</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form">
+      <div style="display: flex;align-items: center;justify-content: space-evenly;">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Enter deal id">
+      </mat-form-field>
+      <div class="filepicker-container">
+      <a (click)="filePicker.click()" class="action-icon">
+        <mat-icon class="menu">file_upload</mat-icon>
+      </a>
+      <input #filePicker
+             type="file"
+             accept="image/*"
+             name="picker"
+             style="display: none;"
+             [(ngModel)]="uploadFile"
+             (change)="uploadImages($event)"/>
+    </div>
+    </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+</div>
